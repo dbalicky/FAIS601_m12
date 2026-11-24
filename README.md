@@ -50,7 +50,7 @@ rm -rf .git
 code .
 ```
 
-## Setting up venv and github repo
+## Set up venv and github repo
 
 ### Set python version to 3.10
 
@@ -85,4 +85,32 @@ git add .
 git commit -m 'Initial commit'
 
 git push -u origin main
+```
+
+# GitHub Actions Issues
+
+## Test Error on 'Install Dependencies'
+
+### Error output
+
+```text
+Failed to install browsers
+Error: ERROR: Playwright does not support chromium on ubuntu26.04-x64
+Error: Process completed with exit code 1.
+```
+
+### Change ubuntu version in test.yml
+
+```yml
+runs-on: ubuntu-24.04
+```
+
+### Commit and push changes
+
+```bash
+git add .
+
+git commit -m 'updated test.yml to run on ubuntu-24.04'
+
+git push
 ```
