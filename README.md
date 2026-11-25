@@ -225,3 +225,37 @@ import redis.asyncio as aioredis
 ```
 
 **Commit and push**
+
+
+# Pushing to Dockerhub
+
+**Create docker repo, then create and copy docker username and token to github secret keys**
+
+## Building docker image
+
+### Remove any currently running docker image
+```bash
+docker compose down -v
+```
+
+### Update postgres image version to 17 in test.yml
+
+```yml
+image: postgres:17
+```
+
+### Build docker image
+```bash
+docker compose up --build -d
+```
+
+**Update tags in test.yml to match docker repo**
+
+### Tag and push to docker repo
+```bash
+docker tag a12-web:latest dbal7/fais601_m12:latest
+
+docker push dbal7/fais601_m12:latest
+```
+
+**Final push to github**
