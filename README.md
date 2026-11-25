@@ -105,12 +105,79 @@ Error: Process completed with exit code 1.
 runs-on: ubuntu-24.04
 ```
 
-### Commit and push changes
+**Commit and push changes**
+
+## Security Error on 'Run Trivy vulnerability scanner'
+
+### Update vulnerable dependency versions
+
+```ini
+anyio==4.14.2
+certifi==2026.10.18
+cffi==2.0.0
+cryptography==50.0.0
+dnspython==2.9.2
+fastapi==0.139.1
+h11==0.16.0
+httpcore==1.0.9
+pyasn1==0.6.5
+python-jose==3.5.0
+python-multipart==0.0.30
+# remove starlette==0.45.3
+urllib3==2.8.0
+```
+
+Removed starlette dependency from requirements.txt to allow fastapi to automatically install compatible version.
+
+### Update and test dependency version compatibility
 
 ```bash
-git add .
+pip install --upgrade -r requirements.txt
 
-git commit -m 'updated test.yml to run on ubuntu-24.04'
+pip check
+```
 
-git push
+**Found version Error with dnspython:**
+```text
+ERROR: Ignored the following versions that require a different python version: 2.9.0 Requires-Python >=3.11; 2.9.1 Requires-Python >=3.11; 2.9.2 Requires-Python >=3.11; 7.17.0 Requires-Python >=3.11; 7.17.1 Requires-Python >=3.11; 7.17.2 Requires-Python >=3.11; 7.17.3 Requires-Python >=3.11; 7.17.4 Requires-Python >=3.11; 7.17.5 Requires-Python >=3.11
+ERROR: Could not find a version that satisfies the requirement dnspython==2.9.2 (from versions: 1.11.0, 1.11.1, 1.12.0, 1.13.0, 1.14.0, 1.15.0, 1.16.0, 2.0.0rc1, 2.0.0rc2, 2.0.0, 2.1.0rc1, 2.1.0, 2.2.0rc1, 2.2.0, 2.2.1, 2.3.0rc1, 2.3.0, 2.4.0rc1, 2.4.0, 2.4.1, 2.4.2, 2.5.0rc1, 2.5.0, 2.6.0rc1, 2.6.0, 2.6.1, 2.7.0rc1, 2.7.0, 2.8.0rc1, 2.8.0)
+ERROR: No matching distribution found for dnspython==2.9.2
+```
+
+### Update Python version
+
+Using dnspython 2.9.2 requires at least python 3.11, so it was necessary to update python to 3.11.
+
+```bash
+deactivate
+pyenv install 3.11.15
+pyenv local 3.11.15
+```
+
+### Recreate venv
+
+```bash
+rm -rf venv
+python -m venv venv
+source venv/bin/activate
+```
+
+### Reinstall dependencies
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+pip check
+```
+
+### Update python version in test.yml
+
+```yml
+python-version: '3.11'
+```
+
+### Update python version in dockerfile
+
+```dockerfile
+FROM python:3.11-slim
 ```
