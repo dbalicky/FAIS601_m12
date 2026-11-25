@@ -258,4 +258,6 @@ docker tag a12-web:latest dbal7/fais601_m12:latest
 docker push dbal7/fais601_m12:latest
 ```
 
+### Update docker tags in test.yml
+
 **Final push to github**
