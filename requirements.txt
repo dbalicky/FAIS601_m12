@@ -37,6 +37,7 @@ pytest-coverage==0.0
 python-dotenv==1.0.1
 python-jose==3.5.0
 python-multipart==0.0.30
+redis==8.2.0
 requests==2.32.3
 rsa==4.9
 six==1.17.0

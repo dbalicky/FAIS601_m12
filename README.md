@@ -201,6 +201,7 @@ FAILED tests/integration/test_user_auth.py::test_authenticate_with_email - TypeE
 
 ```ini
 # remove aioredis==2.0.1
+redis==8.2.0
 ```
 
 ```bash
@@ -213,3 +214,5 @@ pip install redis
 ```py
 import redis.asyncio as aioredis
 ```
+
+**Commit and push**
