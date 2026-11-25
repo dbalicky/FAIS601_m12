@@ -181,3 +181,35 @@ python-version: '3.11'
 ```dockerfile
 FROM python:3.11-slim
 ```
+
+**Commit and push**
+
+## Test Error on 'Run tests'
+
+```text
+FAILED tests/integration/test_user_auth.py::test_password_hashing - TypeError: duplicate base class TimeoutError
+FAILED tests/integration/test_user_auth.py::test_user_registration - TypeError: duplicate base class TimeoutError
+FAILED tests/integration/test_user_auth.py::test_duplicate_user_registration - TypeError: duplicate base class TimeoutError
+FAILED tests/integration/test_user_auth.py::test_user_authentication - TypeError: duplicate base class TimeoutError
+FAILED tests/integration/test_user_auth.py::test_user_last_login_update - TypeError: duplicate base class TimeoutError
+FAILED tests/integration/test_user_auth.py::test_unique_email_username - TypeError: duplicate base class TimeoutError
+FAILED tests/integration/test_user_auth.py::test_token_creation_and_verification - TypeError: duplicate base class TimeoutError
+FAILED tests/integration/test_user_auth.py::test_authenticate_with_email - TypeError: duplicate base class TimeoutError
+```
+
+### Replace aioredis with redis
+
+```ini
+# remove aioredis==2.0.1
+```
+
+```bash
+pip uninstall aioredis
+pip install redis
+```
+
+### Update import in redis.py
+
+```py
+import redis.asyncio as aioredis
+```
