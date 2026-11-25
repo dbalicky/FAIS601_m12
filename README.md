@@ -182,7 +182,16 @@ python-version: '3.11'
 FROM python:3.11-slim
 ```
 
+### Fix stuck setuptools version
+
+**Add to aquasecurity/trivy-action in test.yml**
+
+```yml
+skip-files: '**/pip/_vendor/bom.cdx.json'
+```
+
 **Commit and push**
+
 
 ## Test Error on 'Run tests'
 
